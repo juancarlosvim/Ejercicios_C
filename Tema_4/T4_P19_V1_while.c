@@ -17,7 +17,7 @@ int main()
 
     }
     printf("Hay %d numeros positivos", p);
-    printf("%d", n);
+    
 
 return 0;
 }
