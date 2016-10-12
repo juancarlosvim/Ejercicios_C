@@ -1,4 +1,4 @@
-//T4_P19_V1. Algoritmo que lea 10 números y cuente cuántos de ellos son positivos.
+//T4_P19_V1. Algoritmo que lea 10 nÃºmeros y cuente cuÃ¡ntos de ellos son positivos.
 
 #include <stdio.h>
 int teclado(); // Funcion que lee por teclado la cantidad de numeros que se le pase.
@@ -33,7 +33,7 @@ int teclado( int contador){
 
 int numPositivo(int num){
     int sw = 0;
-    if(num> = 0){
+    if(num <= 0){
         sw = 1;
     }
     return sw;
