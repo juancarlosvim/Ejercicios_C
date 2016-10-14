@@ -30,7 +30,7 @@ float miFuncion(float minVal, float maxVal, float incremento)
 
 
         printf("%.2f\t%.2f\n", f, contador);
-        minVal =minVal+ incremento;
+        
     }
 return 0;
 }
