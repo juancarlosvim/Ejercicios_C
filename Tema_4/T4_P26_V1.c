@@ -2,7 +2,7 @@
 
 int main()
 {
-    int n, mayor, menor;
+    int n, mayor;
     printf("Introduce un numero: ");
     scanf("%d", &n);
     if(n==0){
@@ -10,22 +10,18 @@ int main()
     }
     else{
         mayor = n;
-        menor = n;
+
     }
     do{
         scanf("%d", &n);
         if(n==0){
-            printf("mayor %d, menor %d ", mayor, menor);
+            printf("mayor %d", mayor);
         }
         else{
             if(n>mayor){
                 mayor = n;
             }
-            else{
-                if(n<menor && n!=0){
-                    menor = n;
-                }
-            }
+
         }
     }
     while(n!=0);
