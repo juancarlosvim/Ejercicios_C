@@ -7,7 +7,7 @@ int main()
     int i=0, n = 0, cuadrado;
     for(i=0;i<=19;i++)
     {
-       cuadrado = pow(i, 2);
+       cuadrado = i * i;
        n = n + cuadrado;
 
     }
