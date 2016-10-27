@@ -1,8 +1,8 @@
 #include <stdio.h>
-//T7_P6_V1.- Programa que recibe como dato un número entero positivo, correspondiente a una cantidad de dinero, y
-//calcula e imprime el mejor desglose de moneda (mínimo número de unidades monetarias).
+//T7_P6_V1.- Programa que recibe como dato un nÃºmero entero positivo, correspondiente a una cantidad de dinero, y
+//calcula e imprime el mejor desglose de moneda (mÃ­nimo nÃºmero de unidades monetarias).
 //Las unidades monetarias existentes son: 500, 200, 100, 50, 20, 10, 5, 2, 1.
-//El programa almacenará estas cantidades ordenadas en un vector y desglosará la cantidad en orden decreciente de las
+//El programa almacenarÃ¡ estas cantidades ordenadas en un vector y desglosarÃ¡ la cantidad en orden decreciente de las
 //componentes del vector.
 
 int main()
@@ -22,7 +22,6 @@ int main()
             printf("\t%d\n", division);
         }
         cantidad = resto;
-
     }
-
+return 0;
 }
