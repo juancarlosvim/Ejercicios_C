@@ -30,7 +30,7 @@ int main()
         }
     }
     printf("vector ordenado\n");
-    for(i=1;i<100;i++)
+    for(i=1;i<=100;i++)
     {
         printf("%4d\t", vector[i]);
     }
