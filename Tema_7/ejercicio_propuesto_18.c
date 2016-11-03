@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int main()
@@ -13,7 +14,7 @@ int main()
         printf("%d\n", vector[i]);
     }
 
-    for(i=1;i<=100;i++)
+    for(i=0;i<=99;i++)
     {
         sw = 0;
         for(j=100;j>=i+1;j--)
@@ -30,13 +31,13 @@ int main()
         }
     }
     printf("vector ordenado\n");
-    for(i=1;i<=100;i++)
+    for(i=0;i<=99;i++)
     {
         printf("%4d\t", vector[i]);
     }
     puts("");
     printf("Los menores son:\n");
-    for(i=1;i<=10;i++)
+    for(i=0;i<=9;i++)
     {
 
         printf("%4d\t", vector[i]);
