@@ -2,12 +2,12 @@
 
 int main()
 {
-    char valor; // Una posicion de memoria para guardar un carácter.
+    char valor; // Una posicion de memoria para guardar un carÃ¡cter.
     char *puntero; // un puntero
 
     valor = 97;
     printf("%p => | %d | <= direccion y datos de valor\n", &valor, valor);
-    puntero = &valor; //puntero vale la poscion de valor
+    puntero = &valor; //puntero vale la posicion de valor
     printf("%p => | %p | <= direccion y datos de puntero\n", &puntero, puntero);
     printf("Valor almacenado en puntero = %p\n", puntero);
     printf("Direccion de puntero: &puntero = %p\n", &puntero);
