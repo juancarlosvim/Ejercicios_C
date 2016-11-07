@@ -35,14 +35,14 @@ int main()
         printf("%4d\t", vector[i]);
     }
     printf("\n");
-    printf("Los menores son: \n");
-    for(i=0;i<=9;i++)
+    printf("menor a mayor \n");
+    for(i=0;i<=19;i++)
     {
         printf("%4d\t", vector[i]);
     }
     printf("\n");
-    printf("Los mayores son: \n");
-    for(i=10;i<=19;i++)
+    printf("mayor a menor \n");
+    for(i=20;i>=1;i--)
     {
         printf("%4d\t", vector[i]);
     }
