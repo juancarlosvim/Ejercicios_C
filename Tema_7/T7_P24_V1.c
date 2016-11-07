@@ -10,7 +10,7 @@ int main()
 
     do{
         prediccion=inferior+(superior-inferior)/2;
-        printf("¿tu numero es %d?\n", prediccion);
+        printf("Â¿tu numero es %d?\n", prediccion);
         respuesta=getch();
         switch(respuesta)
         {
@@ -24,8 +24,4 @@ int main()
     }while(respuesta!='s');
 
 return 0;
-
-
-
-
 }
