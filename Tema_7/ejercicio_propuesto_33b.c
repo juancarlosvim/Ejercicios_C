@@ -53,6 +53,6 @@ int main()
     }
 
     puts("");
-    //busqueda dicotomica
+  
 return 0;
 }
