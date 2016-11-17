@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
-
+//Utilizando atol( ), introduce dos números enteros largos en dos cadenas y obtener la suma. 
 int main()
 {
     char cadena[10], cadena2[10];
