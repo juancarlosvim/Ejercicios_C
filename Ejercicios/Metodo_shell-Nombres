@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+    char v[21][20], aux[20], nombre[15];
+    int i, d, sw, x;
+    int cen, izq, der;
+    printf("Introduce 20 apellidos y mostrara la ordenacion ascendente\n");
+    for(i=1;i<=20;i++)
+    {
+        printf("Introduce %d apellido => ", i);
+        gets(v[i]);
+        fflush(stdin);
+    }
+    //ordenacion metodo shell
+    d=20; //tamañp del vector
+    while(d!=1)
+    {
+        d = d/2;
+        sw =1;
+        while(sw==1)
+        {
+            sw =0;
+            for(i=1;i<=20-d;i++)
+            {
+                if(strcmp(v[i], v[i+d])>0){
+                    strcpy(aux, v[i+d]);
+                    strcpy(v[i+d], v[i]);
+                    strcpy(v[i], aux);
+                    sw =1;
+                }
+            }
+        }
+
+    }
+
+    for(i=1;i<=20;i++)
+    {
+        printf("%s\t", v[i]);
+    }
+    puts("");
+return 0;
+}
