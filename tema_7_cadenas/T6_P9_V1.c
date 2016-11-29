@@ -4,7 +4,7 @@
 int main()
 {
     char cadena[11][15];
-    char aux[15],nombre[15];
+    char aux[15],buscar[15];
     int d,i,j,sw,izq,der,cen;
 
     for(i=1;i<=10;i++){
@@ -43,35 +43,42 @@ int main()
             printf("%s",cadena[i]);
             printf("\n");
     }
-    //Busqueda Dicotomica
-    while(1){
-        printf("\nIntroduce un nombre.\n");
-        fflush(stdin);
-        gets(nombre);
-        if(strncmp(nombre,"fin",3)==0)
-            break;
-        izq=1;
-        der=10;
-        while(strncmp(nombre,"fin",3)!=0){
-            cen=(izq+der)/2;
-            if((strcmp(cadena[cen],nombre)==0)||(izq>=der)){
-                if(strcmp(nombre,cadena[cen])==0){
-                    printf("El nombre %s se ha encontrado en la posicion %d",cadena[cen],cen);
+
+    //busqueda dicotomica
+    do{
+            izq= 1;
+            der = 10;
+            printf("Introduce un nombre a buscar => ");
+            fflush(stdin);
+            gets(buscar);
+            if(strcmp(buscar, "fin")==0){
+                break;
+            }
+            while(1)
+            {
+                cen =(izq +der ) /2;
+                if(izq > der){
+                    printf("El nombre %s no se ha encontrado", buscar);
                     break;
+                }
+                if(strcmp(buscar, cadena[cen])==0)
+                {
+                    printf("SE HA ENCONTRADO el nombre %s  EN LA POSCION %d\n", buscar, cen);
+                    break;
+                }
+                if(strcmp(buscar, cadena[cen])>0){
+                    izq = cen +1;
+                    continue;
                 }
                 else{
-                    printf("Nombre no encontrado.\n");
-                    break;
+                    der = cen -1;
+                    continue;
                 }
             }
-            else{
-                if(strcmp(nombre,cadena[cen])>0)
-                    izq=cen+1;
-                else
-                    der=cen-1;
 
-            }
-        }
-    }
+
+    }while (1);
+
 return 0;
+
 }
