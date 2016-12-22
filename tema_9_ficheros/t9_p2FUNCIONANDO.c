@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <conio.h>
@@ -34,7 +35,7 @@ int main()
     FILE *p1;
     int seleccion;
     int i;
-    //tamaño de la estructura
+    //tamaÃ±o de la estructura
     //printf("%d",sizeof(biblioteca1)); //88
 
     p1 = fopen("BIBLIOTECA.DAT", "rb");
@@ -125,7 +126,7 @@ void altas(void)
         printf("Introduce la editorial => ");
         fflush(stdin);
         gets(rg.editorial);
-        printf("Introduce el anno de edicion => ");
+        printf("Introduce el anio de edicion => ");
         fflush(stdin);
         scanf("%d", &rg.anedicion);
         printf("Introduce el numero de paginas => ");
@@ -141,7 +142,7 @@ void altas(void)
         fwrite(&rg,sizeof(rg),1,p1);
         fflush(stdin);
         printf("Desea introducir otro registro? (s/n) ");
-    }while(getchar()== 's');
+    }while(getchar()== 's' || getchar()=='S');
 
     desplazamiento = 0L*sizeof(c);
     fseek(p1, desplazamiento, 0);
@@ -184,7 +185,7 @@ void listado(void)
             printf("Autor => %s\n", rg.autor);
             printf("Titulo => %s\n", rg.titulo);
             printf("Editorial => %s\n", rg.editorial);
-            printf("Anno de edicion => %d\n", rg.anedicion);
+            printf("Anio de edicion => %d\n", rg.anedicion);
             printf("Numero de paginas => %d\n", rg.npaginas);
             printf("Precio => %.2f\n", rg.precio);
             getch();
@@ -219,8 +220,10 @@ void consultas(void)
         printf("[1] Nombre del autor\n");
         printf("[2] Nombre del titulo \n");
         printf("[3] Nombre de la editorial \n");
-        printf("[4] Por anno de edicion\n");
+        printf("[4] Por anio de edicion\n");
+        printf("[5] Por numero de paginas\n");
         printf("[0] Salir \n");
+        printf("Eliga alguna opcion => ");
         scanf("%d", &seleccion);
         switch(seleccion)
         {
@@ -246,7 +249,7 @@ void consultas(void)
                                 printf("Autor => %s\n", rg.autor);
                                 printf("Titulo => %s\n", rg.titulo);
                                 printf("Editorial => %s\n", rg.editorial);
-                                printf("Anno de edicion => %d\n", rg.anedicion);
+                                printf("Anio de edicion => %d\n", rg.anedicion);
                                 printf("Numero de paginas => %d\n", rg.npaginas);
                                 printf("Precio => %.2f\n", rg.precio);
                                 getch();
@@ -259,7 +262,7 @@ void consultas(void)
                         }
                         printf("Desea consultar mas autores? (s/n) =>  ");
 
-                    }while(getchar()=='s');
+                    }while(getchar()== 's' || getchar()=='S');
 
                     break;
 
@@ -287,7 +290,7 @@ void consultas(void)
                                 printf("Autor => %s\n", rg.autor);
                                 printf("Titulo => %s\n", rg.titulo);
                                 printf("Editorial => %s\n", rg.editorial);
-                                printf("Anno de edicion => %d\n", rg.anedicion);
+                                printf("Anio de edicion => %d\n", rg.anedicion);
                                 printf("Numero de paginas => %d\n", rg.npaginas);
                                 printf("Precio => %.2f\n", rg.precio);
                                 getch();
@@ -300,7 +303,7 @@ void consultas(void)
                         }
                         printf("Desea consultar mas titulos? (s/n) =>  ");
 
-                    }while(getchar()=='s');
+                    }while(getchar()== 's' || getchar()=='S');
 
                     break;
 
@@ -330,7 +333,7 @@ void consultas(void)
                                 printf("Autor => %s\n", rg.autor);
                                 printf("Titulo => %s\n", rg.titulo);
                                 printf("Editorial => %s\n", rg.editorial);
-                                printf("Anno de edicion => %d\n", rg.anedicion);
+                                printf("Anio de edicion => %d\n", rg.anedicion);
                                 printf("Numero de paginas => %d\n", rg.npaginas);
                                 printf("Precio => %.2f\n", rg.precio);
                                 getch();
@@ -343,7 +346,7 @@ void consultas(void)
                         }
                         printf("Desea consultar mas editoriales? (s/n) =>  ");
 
-                    }while(getchar()=='s');
+                    }while(getchar()== 's' || getchar()=='S');
 
                     break;
 
@@ -370,7 +373,7 @@ void consultas(void)
                                printf("Autor => %s\n", rg.autor);
                                printf("Titulo => %s\n", rg.titulo);
                                printf("Editorial => %s\n", rg.editorial);
-                               printf("Anno de edicion => %d\n", rg.anedicion);
+                               printf("Anio de edicion => %d\n", rg.anedicion);
                                printf("Numero de paginas => %d\n", rg.npaginas);
                                printf("Precio => %.2f\n", rg.precio);
                                getch();
@@ -384,12 +387,52 @@ void consultas(void)
                        }
                        printf("Desea consultar mas editoriales? (s/n) =>  ");
 
-                   }while(getchar()=='s');
+                   }while(getchar()== 's' || getchar()=='S');
 
                    break;
 
 
 
+                }
+
+            case 5:
+                {
+                       do
+                   {
+                       fflush(stdin);
+                       system("cls");
+                       printf("Introduce el numero de paginas  => ");
+                       fflush(stdin);
+                       scanf("%d", &busca1);
+                       sw =0;
+                       for(i=1;i<=n;i++)
+                       {
+                           desplazamiento=i*sizeof(rg);
+                           fseek(p1, desplazamiento, 0);
+                           fread(&rg, sizeof(rg),1, p1);
+                           if(busca1 == rg.npaginas)
+                           {
+                               sw =1;
+                               printf("Autor => %s\n", rg.autor);
+                               printf("Titulo => %s\n", rg.titulo);
+                               printf("Editorial => %s\n", rg.editorial);
+                               printf("Anio de edicion => %d\n", rg.anedicion);
+                               printf("Numero de paginas => %d\n", rg.npaginas);
+                               printf("Precio => %.2f\n", rg.precio);
+                               getch();
+
+                           }
+                       }
+                       if(sw==0)
+                       {
+                           printf("No encontrado\n");
+                           getch();
+                       }
+                       printf("Desea consultar mas libros por paginas? (s/n) =>  ");
+
+                   }while(getchar()== 's' || getchar()=='S');
+
+                   break;
                 }
 
             case 0:
@@ -419,13 +462,13 @@ void modificaciones(void)
             fread(&c, sizeof(c), 1, p1);
             n =c.nreg;
             fflush(stdin);
-            printf("Introduce el nombre del registro que quieres modificar => ");
+            printf("Introduce el nombre del registro que quieres modificar (fin para salir) => ");
             gets(buscar);
             lon = strlen(buscar);
-            /*if(strcmp(buscar, "FIN")==0)
+            if(strcmp(buscar, "fin")==0)
             {
                 break;
-            }*/
+            }
             sw =0;
 
             for(i=1;i<=n;i++)
@@ -440,35 +483,100 @@ void modificaciones(void)
                     printf("Autor => %s\n", rg.autor);
                     printf("Titulo => %s\n", rg.titulo);
                     printf("Editorial => %s\n", rg.editorial);
-                    printf("Anno de edicion => %d\n", rg.anedicion);
+                    printf("Anio de edicion => %d\n", rg.anedicion);
                     printf("Numero de paginas => %d\n", rg.npaginas);
                     printf("Precio => %.2f\n", rg.precio);
                     fflush(stdin);
                     printf("Desea modificar este registro? (s/n) => ");
                     scanf("%s", &respuesta);
 
-                    if(respuesta == 's')
+                    if(respuesta == 's' || respuesta =='S')
                     {
+                        do{
+                            system("cls");
+                            printf("Autor => %s\n", rg.autor);
+                            printf("Titulo => %s\n", rg.titulo);
+                            printf("Editorial => %s\n", rg.editorial);
+                            printf("Anio de edicion => %d\n", rg.anedicion);
+                            printf("Numero de paginas => %d\n", rg.npaginas);
+                            printf("Precio => %.2f\n", rg.precio);
+                            printf("\n");
+                            printf("\n");
 
-                        fflush(stdin);
-                        printf("Introduce un autor => ");
-                        fflush(stdin);
-                        gets(rg.autor);
-                        printf("Introduce el titulo => ");
-                        fflush(stdin);
-                        gets(rg.titulo);
-                        printf("Introduce la editorial => ");
-                        fflush(stdin);
-                        gets(rg.editorial);
-                        printf("Introduce el anno de edicion => ");
-                        fflush(stdin);
-                        scanf("%d", &rg.anedicion);
-                        printf("Introduce el numero de paginas => ");
-                        fflush(stdin);
-                        scanf("%d", &rg.npaginas);
-                        printf("Introduce el precio => ");
-                        fflush(stdin);
-                        scanf("%f", &rg.precio);
+                            printf("Elige un campo que quieras modificar \n");
+                            printf("[1] Autor \n");
+                            printf("[2] Titulo \n");
+                            printf("[3] Editorial \n");
+                            printf("[4] Anio de edicion \n");
+                            printf("[5] Numero de paginas \n");
+                            printf("[6] Precio \n");
+                            printf("[0] Salir \n");
+                            printf("Seleccione alguna de las siguientes opciones [0-6] => ");
+                            scanf("%d", &selec);
+
+                            if(selec ==0)
+                            {
+                                break;
+                            }
+
+                            switch(selec)
+                            {
+                                case 1:
+                                    {
+                                        fflush(stdin);
+                                        printf("Introduce un autor => ");
+                                        fflush(stdin);
+                                        gets(rg.autor);
+                                        break;
+                                    }
+
+                                case 2:
+                                    {
+                                        fflush(stdin);
+                                        printf("Introduce el titulo => ");
+                                        fflush(stdin);
+                                        gets(rg.titulo);
+                                        break;
+                                    }
+
+                                case 3:
+                                    {
+                                        printf("Introduce la editorial => ");
+                                        fflush(stdin);
+                                        gets(rg.editorial);
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        printf("Introduce el anio de edicion => ");
+                                        fflush(stdin);
+                                        scanf("%d", &rg.anedicion);
+                                        break;
+                                    }
+                                case 5:
+                                    {
+                                        printf("Introduce el numero de paginas => ");
+                                        fflush(stdin);
+                                        scanf("%d", &rg.npaginas);
+                                        break;
+                                    }
+                                case 6:
+                                    {
+                                        printf("Introduce el precio => ");
+                                        fflush(stdin);
+                                        scanf("%f", &rg.precio);
+                                        break;
+                                    }
+
+                                default:
+                                    {
+                                        printf("Opcion incorrecta \n");
+                                    }
+                            }
+                            fflush(stdin);
+                            printf("Desea guardar este registro modificado? (s/n) => \n");
+
+                        }while(getchar() == 's' || getchar()== 'S');
                         fflush(stdin);
 
                         desplazamiento = i*sizeof(rg);
@@ -476,6 +584,7 @@ void modificaciones(void)
                         fwrite(&rg, sizeof(rg), 1, p1);
                         printf("Registro modificado\n");
                         getch();
+
                     }
                 }
             }
@@ -486,7 +595,7 @@ void modificaciones(void)
             }
 
           printf("Desea modificar mas registros? (s/n) =>  ");
-        }while(getchar()=='s');
+        }while(getchar()== 's' || getchar()=='S');
 
         fflush(p1);
         fclose(p1);
@@ -533,7 +642,7 @@ void bajas(void)
                 printf("Autor => %s\n", rg.autor);
                 printf("Titulo => %s\n", rg.titulo);
                 printf("Editorial => %s\n", rg.editorial);
-                printf("Anno de edicion => %d\n", rg.anedicion);
+                printf("Anio de edicion => %d\n", rg.anedicion);
                 printf("Numero de paginas => %d\n", rg.npaginas);
                 printf("Precio => %.2f\n", rg.precio);
                 fflush(stdin);
@@ -578,7 +687,7 @@ void bajas(void)
         }
 
          printf("Desea eliminar mas registros? (s/n) =>  ");
-    }while(getchar()== 's');
+    }while(getchar()== 's' || getchar()=='S');
 
     fflush(p1);
     fclose(p1);
