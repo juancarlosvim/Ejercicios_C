@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <conio.h>
@@ -35,7 +34,7 @@ int main()
     FILE *p1;
     int seleccion;
     int i;
-    //tamaÃ±o de la estructura
+    //tamaño de la estructura
     //printf("%d",sizeof(biblioteca1)); //88
 
     p1 = fopen("BIBLIOTECA.DAT", "rb");
@@ -260,6 +259,7 @@ void consultas(void)
                         {
                             printf("No encontrado\n");
                         }
+                        fflush(stdin);
                         printf("Desea consultar mas autores? (s/n) =>  ");
 
                     }while(getchar()== 's' || getchar()=='S');
@@ -301,6 +301,7 @@ void consultas(void)
                         {
                             printf("No encontrado\n");
                         }
+                        fflush(stdin);
                         printf("Desea consultar mas titulos? (s/n) =>  ");
 
                     }while(getchar()== 's' || getchar()=='S');
@@ -344,6 +345,7 @@ void consultas(void)
                         {
                             printf("No encontrado\n");
                         }
+                        fflush(stdin);
                         printf("Desea consultar mas editoriales? (s/n) =>  ");
 
                     }while(getchar()== 's' || getchar()=='S');
@@ -385,6 +387,7 @@ void consultas(void)
                            printf("No encontrado\n");
                            getch();
                        }
+                       fflush(stdin);
                        printf("Desea consultar mas editoriales? (s/n) =>  ");
 
                    }while(getchar()== 's' || getchar()=='S');
@@ -428,6 +431,7 @@ void consultas(void)
                            printf("No encontrado\n");
                            getch();
                        }
+                       fflush(stdin);
                        printf("Desea consultar mas libros por paginas? (s/n) =>  ");
 
                    }while(getchar()== 's' || getchar()=='S');
@@ -489,7 +493,7 @@ void modificaciones(void)
                     fflush(stdin);
                     printf("Desea modificar este registro? (s/n) => ");
                     scanf("%s", &respuesta);
-
+                    fflush(stdin);
                     if(respuesta == 's' || respuesta =='S')
                     {
                         do{
@@ -593,7 +597,7 @@ void modificaciones(void)
                 printf("No se ha encontrado ningun autor con ese nombre\n");
                 getch();
             }
-
+            fflush(stdin);
           printf("Desea modificar mas registros? (s/n) =>  ");
         }while(getchar()== 's' || getchar()=='S');
 
@@ -621,13 +625,18 @@ void bajas(void)
         fread(&c, sizeof(c), 1, p1);
         n =c.nreg;
         fflush(stdin);
-        printf("Introduce el nombre del registro que quieres eliminar => ");
+        printf("Introduce el nombre del registro que quieres eliminar (fin para salir) => ");
+        fflush(stdin);
         gets(buscar);
-        lon = strlen(buscar);
-        /*if(strcmp(buscar, "FIN")==0)
+        if(strcmp(buscar, "fin")==0)
         {
             break;
-        }*/
+        }
+        lon = strlen(buscar);
+        if(strcmp(buscar, "FIN")==0)
+        {
+            break;
+        }
 
 
         for(i=1;i<=n;i++)
@@ -685,7 +694,7 @@ void bajas(void)
             printf("No se ha encontrado ningun autor con ese nombre\n");
             getch();
         }
-
+        fflush(stdin);
          printf("Desea eliminar mas registros? (s/n) =>  ");
     }while(getchar()== 's' || getchar()=='S');
 
