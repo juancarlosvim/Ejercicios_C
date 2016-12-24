@@ -27,6 +27,8 @@ void consultas();
 void modificaciones();
 void bajas();
 
+void ordenar();
+
 int main()
 {
     biblioteca biblioteca1;
@@ -154,7 +156,7 @@ void altas(void)
 
     fflush(p1);
     fclose(p1);
-
+    ordenar();
 }
 
 
@@ -193,6 +195,8 @@ void listado(void)
     }
     fflush(p1);
     fclose(p1);
+
+
 }
 
 
@@ -603,6 +607,7 @@ void modificaciones(void)
 
         fflush(p1);
         fclose(p1);
+        ordenar();
 }
 
 void bajas(void)
@@ -685,6 +690,7 @@ void bajas(void)
                     fwrite(&c, sizeof(c), 1, p1);
                     printf("Registro eliminado\n");
                     getch();
+
                 }
 
             }
@@ -698,8 +704,61 @@ void bajas(void)
          printf("Desea eliminar mas registros? (s/n) =>  ");
     }while(getchar()== 's' || getchar()=='S');
 
+
+
     fflush(p1);
     fclose(p1);
+
+    ordenar();
+
+}
+
+void ordenar(void)
+{
+    biblioteca rg1, rg2;
+    cero c;
+    FILE *p1;
+    long int n=0, desplazamiento;
+    long int i, d;
+    int sw;
+
+    p1 = fopen("BIBLIOTECA.DAT", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&c, sizeof(c), 1, p1);
+    n = c.nreg;
+    d = n;
+    while(d>=1)
+    {
+        d = d/2;
+        do{
+            sw =0;
+            for(i=1;i<=n-d;i++)
+            {
+                desplazamiento = i*sizeof(rg1);
+                fseek(p1, desplazamiento, 0);
+                fread(&rg1, sizeof(rg1), 1, p1);
+
+                desplazamiento = (i+d)*sizeof(rg2);
+                fseek(p1, desplazamiento, 0);
+                fread(&rg2, sizeof(rg2),1, p1);
+
+                if(strcmp(rg1.autor, rg2.autor)>0)
+                {
+                    desplazamiento = i*sizeof(rg2);
+                    fseek(p1, desplazamiento, 0);
+                    fwrite(&rg2, sizeof(rg2), 1, p1);
+
+                    desplazamiento=(i+d)*sizeof(rg1);
+                    fseek(p1, desplazamiento, 0);
+                    fwrite(&rg1, sizeof(rg1), 1, p1);
+
+                    sw =1;
+                }
+            }
+        }while(sw);
+    }
+    fclose(p1);
+
 }
 
 
