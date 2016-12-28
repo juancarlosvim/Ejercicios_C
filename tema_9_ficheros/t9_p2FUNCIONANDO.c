@@ -15,11 +15,11 @@ typedef struct
 
 typedef struct
 {
-    long nreg;
-    char blancos[60];
+    long  nreg;
+    char blancos[84];
 }cero;
 
-int i;
+
 
 void altas();
 void listado();
@@ -39,6 +39,8 @@ int main()
     //tamaño de la estructura
     //printf("%d",sizeof(biblioteca1)); //88
 
+    //printf("%d", sizeof(c)); //64
+
     p1 = fopen("BIBLIOTECA.DAT", "rb");
     if(p1 == NULL)
     {
@@ -51,7 +53,7 @@ int main()
 
         fseek(p1, 0L, 0);
         c.nreg=0L;
-        for(i=0;i<=60;i++)
+        for(i=0;i<84;i++)
         {
             c.blancos[i] = ' ';
         }
@@ -60,7 +62,7 @@ int main()
     fflush(p1);
     fclose(p1);
 
-    while(seleccion!=0)
+    do
     {
         system("cls");
         printf("----MENU----\n");
@@ -90,7 +92,7 @@ int main()
             break;
             default: printf("Opcion incorrecta \n");
         }
-    }
+    }while(seleccion !=0);
 
     return 0;
 }
@@ -99,6 +101,7 @@ void altas(void)
 {
     long int n = 0; // numero de registros
     long int desplazamiento;
+    int i;
     system("cls");
     biblioteca rg;
     cero c;
@@ -148,7 +151,7 @@ void altas(void)
     desplazamiento = 0L*sizeof(c);
     fseek(p1, desplazamiento, 0);
     c.nreg = n;
-    for(i=0;i<60;i++)
+    for(i=0;i<84;i++)
     {
         c.blancos[i]=' ';
     }
@@ -163,6 +166,7 @@ void altas(void)
 void listado(void)
 {
     long int n=0, desplazamiento;
+    int i;
 
     biblioteca rg;
     cero c;
@@ -205,6 +209,7 @@ void consultas(void)
     long int n=0, desplazamiento;
     int  seleccion, sw=0, lon;
     int selec;
+    int i;
     char buscar[20];
     long busca1;
     biblioteca rg;
@@ -455,6 +460,7 @@ void modificaciones(void)
     long int n=0, desplazamiento;
     int  seleccion, sw=0, lon;
     int selec;
+    int i;
     char buscar[20];
     long busca1;
     char respuesta;
@@ -615,6 +621,7 @@ void bajas(void)
     long int n=0, desplazamiento;
     int  seleccion, sw=0, lon;
     int selec, k;
+    int i;
     char buscar[20];
     long busca1;
     char respuesta;
@@ -683,7 +690,7 @@ void bajas(void)
                     n = n-1;
                     fseek(p1, 0L, 0);
                     c.nreg = n;
-                    for(k=0;k<=60;k++)
+                    for(k=0;k<84;k++)
                     {
                         c.blancos[k]=' ';
                     }
