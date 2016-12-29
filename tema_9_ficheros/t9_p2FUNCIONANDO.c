@@ -29,6 +29,7 @@ void bajas();
 
 void ordenar();
 
+
 int main()
 {
     biblioteca biblioteca1;
@@ -40,6 +41,9 @@ int main()
     //printf("%d",sizeof(biblioteca1)); //88
 
     //printf("%d", sizeof(c)); //64
+
+
+
 
     p1 = fopen("BIBLIOTECA.DAT", "rb");
     if(p1 == NULL)
@@ -101,7 +105,7 @@ void altas(void)
 {
     long int n = 0; // numero de registros
     long int desplazamiento;
-    int i;
+    int i, k;
     system("cls");
     biblioteca rg;
     cero c;
@@ -620,7 +624,7 @@ void bajas(void)
 {
     long int n=0, desplazamiento;
     int  seleccion, sw=0, lon;
-    int selec, k;
+    int selec, k , j;
     int i;
     char buscar[20];
     long busca1;
@@ -629,64 +633,65 @@ void bajas(void)
     cero c;
 
     FILE *p1;
+    p1 =fopen("BIBLIOTECA.DAT", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&c, sizeof(c), 1, p1);
+    n =c.nreg;
     do
     {
         system("cls");
-        p1 =fopen("BIBLIOTECA.DAT", "r+b");
-        fseek(p1, 0L, 0);
-        fread(&c, sizeof(c), 1, p1);
-        n =c.nreg;
+
         fflush(stdin);
+
         printf("Introduce el nombre del registro que quieres eliminar (fin para salir) => ");
         fflush(stdin);
         gets(buscar);
+        lon = strlen(buscar);
         if(strcmp(buscar, "fin")==0)
         {
             break;
         }
-        lon = strlen(buscar);
-        if(strcmp(buscar, "FIN")==0)
-        {
-            break;
-        }
-
-
+        sw = 0;
         for(i=1;i<=n;i++)
         {
             desplazamiento = i*sizeof(rg);
             fseek(p1, desplazamiento, 0);
             fread(&rg, sizeof(rg), 1, p1);
 
-            if(strncmp(rg.autor, buscar, lon)==0)
+            if(strncmp(buscar, rg.autor, lon)==0)
             {
-                sw =1;
+
+                printf("Numero de registro => %d\n", i);
                 printf("Autor => %s\n", rg.autor);
                 printf("Titulo => %s\n", rg.titulo);
                 printf("Editorial => %s\n", rg.editorial);
                 printf("Anio de edicion => %d\n", rg.anedicion);
                 printf("Numero de paginas => %d\n", rg.npaginas);
                 printf("Precio => %.2f\n", rg.precio);
+                sw =1;
                 fflush(stdin);
                 printf("Desea eliminar este registro? (s/n) => ");
-                scanf("%s", &respuesta);
+                scanf("%c", &respuesta);
 
-                if(respuesta == 's')
+                if(respuesta == 's' || respuesta=='S')
                 {
-                    rg.autor[0]= '#';
+                    /*rg.autor[0]= '#';
                     rg.autor[0] = '#';
                     rg.titulo[0] = '#';
                     rg.editorial[0] = '#';
                     rg.anedicion = 0;
                     rg.npaginas = 0;
-                    rg.precio = 0.0;
+                    rg.precio = 0.0; */
+                    for(j=i;j<=n;j++)
+                    {
+                        desplazamiento= (j+1)*sizeof(rg);
+                        fseek(p1, desplazamiento, 0);
+                        fread(&rg, sizeof(rg), 1, p1);
 
-                    desplazamiento= n*sizeof(rg);
-                    fseek(p1, desplazamiento, 0);
-                    fread(&rg, sizeof(rg), 1, p1);
-
-                    desplazamiento = i*sizeof(rg);
-                    fseek(p1, desplazamiento, 0);
-                    fwrite(&rg, sizeof(rg), 1, p1);
+                        desplazamiento = j*sizeof(rg);
+                        fseek(p1, desplazamiento, 0);
+                        fwrite(&rg, sizeof(rg), 1, p1);
+                    }
                     n = n-1;
                     fseek(p1, 0L, 0);
                     c.nreg = n;
@@ -696,10 +701,8 @@ void bajas(void)
                     }
                     fwrite(&c, sizeof(c), 1, p1);
                     printf("Registro eliminado\n");
-                    getch();
 
                 }
-
             }
         }
         if(sw == 0)
@@ -708,11 +711,9 @@ void bajas(void)
             getch();
         }
         fflush(stdin);
-         printf("Desea eliminar mas registros? (s/n) =>  ");
+        printf("Desea eliminar mas registros? (s/n) =>  ");
+        fflush(stdin);
     }while(getchar()== 's' || getchar()=='S');
-
-
-
     fflush(p1);
     fclose(p1);
 
@@ -767,5 +768,7 @@ void ordenar(void)
     fclose(p1);
 
 }
+
+
 
 
