@@ -211,7 +211,7 @@ void consultas(void)
     int sw=0;
     int longitud;
     char buscar[20];
-    int busca1;
+    long busca1;
 
     biblioteca biblioteca1;
     primer_registro registro0;
@@ -358,7 +358,7 @@ void consultas(void)
                         system("cls");
                         printf("Introduce el anio del libro que quieres consultar => ");
                         fflush(stdin);
-                        scanf("%d", &biblioteca1.anEdicion);
+                        scanf("%ld", &busca1);
                         sw =0;
                         for(i=1;i<=n;i++)
                         {
@@ -379,7 +379,7 @@ void consultas(void)
                         }
                         if(sw==0)
                         {
-                            printf("No se ha encontrado ningun libro con ese anio => %d\n", busca1);
+                            printf("No se ha encontrado ningun libro con ese anio => %ld\n", busca1);
                         }
                         printf("Desea seguir buscando mas libros por anio de edicion? (s/n) => ");
                         fflush(stdin);
