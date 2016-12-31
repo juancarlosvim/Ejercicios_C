@@ -23,6 +23,8 @@ void altas();
 void listados();
 void consultas();
 void modificaciones();
+void bajas();
+
 int main()
 {
     int k;
@@ -62,6 +64,7 @@ int main()
         printf("2) LISTADOS\n");
         printf("3) CONSULTAS\n");
         printf("4) MODIFICACIONES\n");
+        printf("5) BAJAS\n");
         printf("0) SALIR\n");
         printf("Elige una opcion => ");
         scanf("%d", &seleccion);
@@ -91,6 +94,11 @@ int main()
             case 4:
                 {
                     modificaciones();
+                    break;
+                }
+            case 5:
+                {
+                    bajas();
                     break;
                 }
             default:
@@ -282,6 +290,7 @@ void consultas(void)
                         printf("Desea buscar mas autores?(s/n)=> ");
                         fflush(stdin);
                     }while(getchar()=='s'|| getchar()=='S');
+                    break;
                 }
             case 2:
                 {
@@ -321,6 +330,7 @@ void consultas(void)
                         printf("Desea buscar mas libros por sus titulos?(s/n)=> ");
                         fflush(stdin);
                     }while(getchar()=='s'|| getchar()=='S');
+                    break;
                 }
             case 3:
                 {
@@ -359,6 +369,7 @@ void consultas(void)
                         printf("Desea buscar mas editoriales?(s/n)=> ");
                         fflush(stdin);
                     }while(getchar()=='s'|| getchar()=='S');
+                    break;
                 }
             case 4:
                 {
@@ -392,6 +403,7 @@ void consultas(void)
                         printf("Desea seguir buscando mas libros por anio de edicion? (s/n) => ");
                         fflush(stdin);
                     }while(getchar()=='s' || getchar()=='S');
+                    break;
                 }
             case 5:
                 {
@@ -425,6 +437,7 @@ void consultas(void)
                         printf("Desea seguir buscando mas libros por numero de paginas? (s/n) => ");
                         fflush(stdin);
                     }while(getchar()=='s' || getchar()=='S');
+                    break;
                 }
 
         }
@@ -583,4 +596,88 @@ void modificaciones(void)
     }while(1);
     fclose(p1);
 
+}
+
+void bajas(void)
+{
+    long int n;
+    long int desplazamiento;
+    int i, j, k;
+    int sw =0;
+    int longitud;
+    int seleccion;
+    char buscar[20];
+    char respuesta;
+    biblioteca biblioteca1;
+    primer_registro registro0;
+    FILE *p1;
+    system("cls");
+    p1 = fopen("BIBLIOTECA.JC", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&registro0.nRegistros, sizeof(registro0.nRegistros), 1, p1);
+    n = registro0.nRegistros;
+
+    do
+    {
+        system("cls");
+        printf("Introduce el autor que deseas eliminar (fin para salir)=> ");
+        fflush(stdin);
+        gets(buscar);
+        if(strcmp(buscar, "fin")==0)
+        {
+            break;
+        }
+        longitud = strlen(buscar);
+        sw = 0;
+        for(i=1;i<=n;i++)
+        {
+            desplazamiento = i*sizeof(biblioteca1);
+            fseek(p1, desplazamiento, 0);
+            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+            if(strncmp(buscar, biblioteca1.autor, longitud)==0)
+            {
+                sw =1;
+                printf("Autor => %s\n", biblioteca1.autor);
+                printf("Titulo => %s\n", biblioteca1.titulo);
+                printf("Editorial => %s\n", biblioteca1.editorial);
+                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                printf("Precio => %.2f\n", biblioteca1.precio);
+                getch();
+
+                printf("Quieres eliminar el libro? (s/n) => ");
+                scanf("%c", &respuesta);
+                if(respuesta=='s' || respuesta =='S')
+                {
+                    for(j=i;j<=n;j++)
+                    {
+                        desplazamiento=(j+1)*sizeof(biblioteca1);
+                        fseek(p1, desplazamiento, 0);
+                        fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+
+                        desplazamiento =j *sizeof(biblioteca1);
+                        fseek(p1, desplazamiento, 0);
+                        fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                    }
+                    fseek(p1, 0L, 0);
+                    registro0.nRegistros = n-1;
+                    for(k=0;k<84;k++)
+                    {
+                        registro0.blancos[k]=' ';
+                    }
+                    fwrite(&registro0, sizeof(registro0), 1, p1);
+                }
+                printf("Libro eliminado\n");
+                getch();
+            }
+        }
+        if(sw==0)
+        {
+            printf("No se ha encontrado ningun libro con ese nombre => %s",buscar);
+            getch();
+        }
+
+    }while(1);
+
+    fclose(p1);
 }
