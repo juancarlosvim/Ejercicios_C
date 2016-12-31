@@ -22,6 +22,7 @@ typedef struct
 void altas();
 void listados();
 void consultas();
+void modificaciones();
 int main()
 {
     int k;
@@ -60,6 +61,7 @@ int main()
         printf("1) ALTAS\n");
         printf("2) LISTADOS\n");
         printf("3) CONSULTAS\n");
+        printf("4) MODIFICACIONES\n");
         printf("0) SALIR\n");
         printf("Elige una opcion => ");
         scanf("%d", &seleccion);
@@ -84,6 +86,11 @@ int main()
             case 3:
                 {
                     consultas();
+                    break;
+                }
+            case 4:
+                {
+                    modificaciones();
                     break;
                 }
             default:
@@ -230,6 +237,7 @@ void consultas(void)
         printf("2) Nombre del titulo\n");
         printf("3) Nombre de la editorial\n");
         printf("4) Anio de edicion\n");
+        printf("5) Numero de paginas\n");
         printf("0) Salir\n");
 
         printf("Elige una opcion => ");
@@ -385,7 +393,194 @@ void consultas(void)
                         fflush(stdin);
                     }while(getchar()=='s' || getchar()=='S');
                 }
+            case 5:
+                {
+                    do{
+                        system("cls");
+                        printf("Introduce el numero de paginas del libro que quieres consultar => ");
+                        fflush(stdin);
+                        scanf("%ld", &busca1);
+                        sw =0;
+                        for(i=1;i<=n;i++)
+                        {
+                            desplazamiento = i*sizeof(biblioteca1);
+                            fseek(p1, desplazamiento, 0);
+                            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                            if(busca1 == biblioteca1.nPaginas)
+                            {
+                                sw =1;
+                                printf("Autor => %s\n", biblioteca1.autor);
+                                printf("Titulo => %s\n", biblioteca1.titulo);
+                                printf("Editorial => %s\n", biblioteca1.editorial);
+                                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                                printf("Precio => %.2f\n", biblioteca1.precio);
+                                getch();
+                            }
+                        }
+                        if(sw==0)
+                        {
+                            printf("No se ha encontrado ningun libro con ese numero de paginas => %ld\n", busca1);
+                        }
+                        printf("Desea seguir buscando mas libros por numero de paginas? (s/n) => ");
+                        fflush(stdin);
+                    }while(getchar()=='s' || getchar()=='S');
+                }
 
         }
     }
+}
+
+void modificaciones(void)
+{
+    long int n;
+    long int desplazamiento;
+    int i;
+    int sw =0;
+    int longitud;
+    int seleccion;
+    char buscar[20];
+    char respuesta;
+    biblioteca biblioteca1;
+    primer_registro registro0;
+    FILE *p1;
+    system("cls");
+    p1 = fopen("BIBLIOTECA.JC", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&registro0.nRegistros, sizeof(registro0.nRegistros), 1, p1);
+    n = registro0.nRegistros;
+
+    do
+    {
+        system("cls");
+        printf("Introduce el autor que quieres modificar (fin para salir) => \n");
+        fflush(stdin);
+        gets(buscar);
+        if(strcmp(buscar, "fin")==0)
+        {
+            break;
+        }
+        longitud = strlen(buscar);
+
+        sw=0;
+
+        for(i=1;i<=n;i++)
+        {
+            desplazamiento = i* sizeof(biblioteca1);
+            fseek(p1, desplazamiento, 0);
+            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+            if(strncmp(biblioteca1.autor, buscar, longitud)==0)
+            {
+                sw =1;
+                printf("Autor => %s\n", biblioteca1.autor);
+                printf("Titulo => %s\n", biblioteca1.titulo);
+                printf("Editorial => %s\n", biblioteca1.editorial);
+                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                printf("Precio => %.2f\n", biblioteca1.precio);
+                getch();
+
+                printf("Quieres modificar el registro? (s/n) => ");
+                scanf("%c", &respuesta);
+                if(respuesta =='s' || respuesta == 'S')
+                {
+                    do{
+                        system("cls");
+                        printf("Numero de registro => %d\n", i);
+                        printf("Autor => %s\n", biblioteca1.autor);
+                        printf("Titulo => %s\n", biblioteca1.titulo);
+                        printf("Editorial => %s\n", biblioteca1.editorial);
+                        printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                        printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                        printf("Precio => %.2f\n", biblioteca1.precio);
+                        printf("\n");
+                        printf("1) Autor \n");
+                        printf("2) Titulo \n");
+                        printf("3) Editorial \n");
+                        printf("4) Anio de edicion \n");
+                        printf("5) Numero de paginas \n");
+                        printf("6) Precio \n");
+                        printf("0) Salir \n");
+                        printf("Seleccione una opcion que desea modificar => ");
+                        fflush(stdin);
+                        scanf("%d", &seleccion);
+                        if(seleccion==0)
+                        {
+                            break;
+                        }
+                        switch(seleccion)
+                        {
+                            case 1:
+                                {
+                                    printf("Introduce el nuevo autor => ");
+                                    fflush(stdin);
+                                    gets(biblioteca1.autor);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    printf("Introduce el nuevo titulo => ");
+                                    fflush(stdin);
+                                    gets(biblioteca1.titulo);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    printf("Introduce la nueva editorial => ");
+                                    fflush(stdin);
+                                    gets(biblioteca1.editorial);
+                                    break;
+                                }
+                            case 4:
+                                {
+                                    printf("Introduce el nuevo anio de edicion => ");
+                                    fflush(stdin);
+                                    scanf("%d", &biblioteca1.anEdicion);
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    printf("Introdue el nuevo numero de paginas => ");
+                                    fflush(stdin);
+                                    scanf("%d", &biblioteca1.nPaginas);
+                                    break;
+                                }
+                            case 6:
+                                {
+                                    printf("Introduce el nuevo precio => ");
+                                    fflush(stdin);
+                                    scanf("%f", &biblioteca1.precio);
+                                    break;
+                                }
+                            default:
+                                {
+                                    printf("Opcion incorrecta \n");
+                                    break;
+                                }
+                        }
+
+
+
+                    }while(1);
+
+
+
+                    desplazamiento = i*sizeof(biblioteca1);
+                    fseek(p1, desplazamiento, 0);
+                    fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                    printf("Registro modificado\n");
+                    getch();
+                }
+            }
+
+        }
+        if(sw ==0)
+        {
+            printf("No se ha encontrado con ningun autor con este nombre => %s\n", buscar);
+            getch();
+        }
+
+    }while(1);
+    fclose(p1);
+
 }
