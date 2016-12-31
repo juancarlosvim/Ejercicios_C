@@ -21,6 +21,7 @@ typedef struct
 //********* FUNCIONES *********
 void altas();
 void listados();
+void consultas();
 int main()
 {
     int k;
@@ -58,6 +59,7 @@ int main()
         printf("----MANTENIMIENTO----\n");
         printf("1) ALTAS\n");
         printf("2) LISTADOS\n");
+        printf("3) CONSULTAS\n");
         printf("0) SALIR\n");
         printf("Elige una opcion => ");
         scanf("%d", &seleccion);
@@ -77,6 +79,11 @@ int main()
             case 2:
                 {
                     listados();
+                    break;
+                }
+            case 3:
+                {
+                    consultas();
                     break;
                 }
             default:
@@ -102,7 +109,7 @@ void altas(void)
 
     p1 = fopen("BIBLIOTECA.JC", "r+b");
     fseek(p1, 0L, 0);
-    fread(&registro0.nRegistros, sizeof(registro0.nRegistros), 1, p1);
+    fread(&registro0, sizeof(registro0), 1, p1);
     n = registro0.nRegistros;
 
     do{
@@ -193,6 +200,192 @@ void listados(void)
         //printf("Autor => %s\n", biblioteca1.autor);
     }
     fclose(p1);
+}
 
+void consultas(void)
+{
+    long int n=0;
+    long int desplazamiento;
+    int seleccion;
+    int i;
+    int sw=0;
+    int longitud;
+    char buscar[20];
+    int busca1;
 
+    biblioteca biblioteca1;
+    primer_registro registro0;
+    FILE *p1;
+
+    p1 =fopen("BIBLIOTECA.JC", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&registro0, sizeof(registro0), 1, p1);
+
+    n = registro0.nRegistros;
+
+    while(seleccion !=0)
+    {
+        system("cls");
+        printf("1) Nombre del autor\n");
+        printf("2) Nombre del titulo\n");
+        printf("3) Nombre de la editorial\n");
+        printf("4) Anio de edicion\n");
+        printf("0) Salir\n");
+
+        printf("Elige una opcion => ");
+        scanf("%d", &seleccion);
+
+        switch(seleccion)
+        {
+            case 1:
+                {
+                    do
+                    {
+
+                        system("cls");
+                        printf("Introduce el autor que quieres consultar => ");
+                        fflush(stdin);
+                        gets(buscar);
+                        longitud = strlen(buscar);
+                        sw =0;
+                        for(i=1;i<=n;i++)
+                        {
+                            desplazamiento = i* sizeof(biblioteca1);
+                            fseek(p1, desplazamiento, 0);
+                            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                            if(strncmp(biblioteca1.autor, buscar, longitud)==0)
+                            {
+                                sw =1;
+                                printf("Autor => %s\n", biblioteca1.autor);
+                                printf("Titulo => %s\n", biblioteca1.titulo);
+                                printf("Editorial => %s\n", biblioteca1.editorial);
+                                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                                printf("Precio => %.2f\n", biblioteca1.precio);
+                                getch();
+
+                            }
+                        }
+                        if(sw ==0)
+                        {
+                            printf("No se ha encontrado con ningun autor con este nombre => %s\n", buscar);
+                        }
+
+                        printf("Desea buscar mas autores?(s/n)=> ");
+                        fflush(stdin);
+                    }while(getchar()=='s'|| getchar()=='S');
+                }
+            case 2:
+                {
+
+                    do
+                    {
+
+                        system("cls");
+                        printf("Introduce el titulo del libro que quieres consultar => ");
+                        fflush(stdin);
+                        gets(buscar);
+                        longitud = strlen(buscar);
+                        sw =0;
+                        for(i=1;i<=n;i++)
+                        {
+                            desplazamiento = i* sizeof(biblioteca1);
+                            fseek(p1, desplazamiento, 0);
+                            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                            if(strncmp(biblioteca1.titulo, buscar, longitud)==0)
+                            {
+                                sw =1;
+                                printf("Autor => %s\n", biblioteca1.autor);
+                                printf("Titulo => %s\n", biblioteca1.titulo);
+                                printf("Editorial => %s\n", biblioteca1.editorial);
+                                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                                printf("Precio => %.2f\n", biblioteca1.precio);
+                                getch();
+
+                            }
+                        }
+                        if(sw ==0)
+                        {
+                            printf("No se ha encontrado con ningun libro con ese titulo => %s\n", buscar);
+                        }
+
+                        printf("Desea buscar mas libros por sus titulos?(s/n)=> ");
+                        fflush(stdin);
+                    }while(getchar()=='s'|| getchar()=='S');
+                }
+            case 3:
+                {
+                    do
+                    {
+
+                        system("cls");
+                        printf("Introduce la editorial que quieres consultar => ");
+                        fflush(stdin);
+                        gets(buscar);
+                        longitud = strlen(buscar);
+                        sw =0;
+                        for(i=1;i<=n;i++)
+                        {
+                            desplazamiento = i* sizeof(biblioteca1);
+                            fseek(p1, desplazamiento, 0);
+                            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                            if(strncmp(biblioteca1.editorial, buscar, longitud)==0)
+                            {
+                                sw =1;
+                                printf("Autor => %s\n", biblioteca1.autor);
+                                printf("Titulo => %s\n", biblioteca1.titulo);
+                                printf("Editorial => %s\n", biblioteca1.editorial);
+                                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                                printf("Precio => %.2f\n", biblioteca1.precio);
+                                getch();
+
+                            }
+                        }
+                        if(sw ==0)
+                        {
+                            printf("No se ha encontrado con ninguna editorial con ese nombre => %s\n", buscar);
+                        }
+
+                        printf("Desea buscar mas editoriales?(s/n)=> ");
+                        fflush(stdin);
+                    }while(getchar()=='s'|| getchar()=='S');
+                }
+            case 4:
+                {
+                    do{
+                        system("cls");
+                        printf("Introduce el anio del libro que quieres consultar => ");
+                        fflush(stdin);
+                        scanf("%d", &biblioteca1.anEdicion);
+                        sw =0;
+                        for(i=1;i<=n;i++)
+                        {
+                            desplazamiento = i*sizeof(biblioteca1);
+                            fseek(p1, desplazamiento, 0);
+                            fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
+                            if(busca1 == biblioteca1.anEdicion)
+                            {
+                                sw =1;
+                                printf("Autor => %s\n", biblioteca1.autor);
+                                printf("Titulo => %s\n", biblioteca1.titulo);
+                                printf("Editorial => %s\n", biblioteca1.editorial);
+                                printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+                                printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+                                printf("Precio => %.2f\n", biblioteca1.precio);
+                                getch();
+                            }
+                        }
+                        if(sw==0)
+                        {
+                            printf("No se ha encontrado ningun libro con ese anio => %d\n", busca1);
+                        }
+                        printf("Desea seguir buscando mas libros por anio de edicion? (s/n) => ");
+                        fflush(stdin);
+                    }while(getchar()=='s' || getchar()=='S');
+                }
+
+        }
+    }
 }
