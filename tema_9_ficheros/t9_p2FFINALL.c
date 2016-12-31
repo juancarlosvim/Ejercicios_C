@@ -1,0 +1,198 @@
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+
+typedef struct
+{
+    char autor[30];
+    char titulo[30];
+    char editorial[15];
+    int anEdicion;
+    int nPaginas;
+    float precio;
+}biblioteca;
+
+typedef struct
+{
+    long int nRegistros; //long int mude 4
+    char blancos[84];
+}primer_registro;
+
+//********* FUNCIONES *********
+void altas();
+void listados();
+int main()
+{
+    int k;
+    int seleccion;
+    biblioteca biblioteca1;
+    primer_registro registro0;
+    FILE *p1;
+    p1 = fopen("BIBLIOTECA.JC", "rb");
+    if(p1==NULL)
+    {
+        printf("Archivo vacio\n");
+        getch();
+        system("cls");
+        p1 = fopen("BIBLIOTECA.JC", "a+b");
+        printf("Archivo creado\n");
+        fseek(p1, 0L, 0);
+        registro0.nRegistros =0L;
+        for(k=0;k<84;k++)
+        {
+            registro0.blancos[k]=' ';
+        }
+        fwrite(&registro0, sizeof(registro0), 1, p1);
+        printf("Numero de registro n vale %d\n", registro0.nRegistros);
+        getch();
+    }
+    fclose(p1);
+
+    /*long int d;
+    printf("\nEl tamanio de biblioteca es %d", sizeof(biblioteca)); //88
+    printf("\nEl tamanio de primer registro es %d", sizeof(primer_registro)); //88
+    printf("\nel tamanio de long int es %d", sizeof(d)); //4 */
+
+    do{
+        system("cls");
+        printf("----MANTENIMIENTO----\n");
+        printf("1) ALTAS\n");
+        printf("2) LISTADOS\n");
+        printf("0) SALIR\n");
+        printf("Elige una opcion => ");
+        scanf("%d", &seleccion);
+
+        if(seleccion==0)
+        {
+            printf("Bye!!!!!!\n");
+            break;
+        }
+        switch(seleccion)
+        {
+            case 1:
+                {
+                    altas();
+                    break;
+                }
+            case 2:
+                {
+                    listados();
+                    break;
+                }
+            default:
+                {
+                    printf("Opcion incorrecta\n");
+                    break;
+                }
+        }
+
+    }while(1);
+
+}
+
+void altas(void)
+{
+    long int n =0;
+    long int desplazamiento;
+    int k;
+
+    biblioteca biblioteca1;
+    primer_registro registro0;
+    FILE *p1;
+
+    p1 = fopen("BIBLIOTECA.JC", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&registro0.nRegistros, sizeof(registro0.nRegistros), 1, p1);
+    n = registro0.nRegistros;
+
+    do{
+        n = n+1;
+        system("cls");
+        printf("Introduce el autor => ");
+        fflush(stdin);
+        gets(biblioteca1.autor);
+        if(strcmp(biblioteca1.autor, "fin")==0)
+        {
+            break;
+        }
+        printf("Introduce el titulo => ");
+        fflush(stdin);
+        gets(biblioteca1.titulo);
+        printf("Introduce la editorial => ");
+        fflush(stdin);
+        gets(biblioteca1.editorial);
+        printf("Introduce el anio de edicion => ");
+        fflush(stdin);
+        scanf("%d", &biblioteca1.anEdicion);
+        printf("Introduce el numero de paginas => ");
+        fflush(stdin);
+        scanf("%d", &biblioteca1.nPaginas);
+        printf("Introduce el precio => ");
+        fflush(stdin);
+        scanf("%f", &biblioteca1.precio);
+
+
+        desplazamiento = n*sizeof(biblioteca1);
+        fseek(p1, desplazamiento, 0);
+        fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
+
+        printf("Autor registrado\n");
+        fflush(stdin);
+        printf("Quiere introducir mas libros? (s/n)=> ");
+    }while(getchar()=='s' || getchar() == 'S');
+
+    fseek(p1, 0L, 0);
+    registro0.nRegistros = n;
+    for(k=0;k<84;k++)
+    {
+        registro0.blancos[k]=' ';
+    }
+    fwrite(&registro0, sizeof(registro0), 1, p1);
+    fclose(p1);
+}
+
+
+void listados(void)
+{
+    long int n;
+    long int desplazamiento;
+    int i, k;
+    biblioteca biblioteca1;
+    primer_registro registro0;
+    FILE *p1;
+    system("cls");
+    p1 = fopen("BIBLIOTECA.JC", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&registro0.nRegistros, sizeof(registro0.nRegistros), 1, p1);
+    n = registro0.nRegistros;
+
+    printf("Numero de registros es %ld\n", n);
+    getch();
+    for(i=1;i<=n;i++)
+    {
+        desplazamiento = i*sizeof(biblioteca1);
+        fseek(p1, desplazamiento, 0);
+        fread(&biblioteca1, sizeof(biblioteca1),1, p1);
+        if(strcmp(biblioteca1.autor, "#")==0)
+        {
+            continue;
+
+        }
+        else
+        {
+            system("cls");
+            printf("Numero de registro %d \n", i);
+            printf("Autor => %s\n", biblioteca1.autor);
+            printf("Titulo => %s\n", biblioteca1.titulo);
+            printf("Editorial => %s\n", biblioteca1.editorial);
+            printf("Anio de edicion => %d\n", biblioteca1.anEdicion);
+            printf("Numero de paginas => %d\n", biblioteca1.nPaginas);
+            printf("Precio => %.2f\n", biblioteca1.precio);
+            getch();
+        }
+        //printf("Autor => %s\n", biblioteca1.autor);
+    }
+    fclose(p1);
+
+
+}
