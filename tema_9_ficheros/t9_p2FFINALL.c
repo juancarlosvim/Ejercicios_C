@@ -659,8 +659,9 @@ void bajas(void)
                         fseek(p1, desplazamiento, 0);
                         fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
                     }
+                    n = n -1;
                     fseek(p1, 0L, 0);
-                    n = n-1;
+                    registro0.nRegistros = n;
                     for(k=0;k<84;k++)
                     {
                         registro0.blancos[k]=' ';
