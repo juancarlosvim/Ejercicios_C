@@ -24,6 +24,7 @@ void listados();
 void consultas();
 void modificaciones();
 void bajas();
+void ordenar();
 
 int main()
 {
@@ -133,10 +134,6 @@ void altas(void)
         printf("Introduce el autor => ");
         fflush(stdin);
         gets(biblioteca1.autor);
-        if(strcmp(biblioteca1.autor, "fin")==0)
-        {
-            break;
-        }
         printf("Introduce el titulo => ");
         fflush(stdin);
         gets(biblioteca1.titulo);
@@ -158,7 +155,7 @@ void altas(void)
         fseek(p1, desplazamiento, 0);
         fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
 
-        printf("Autor registrado\n");
+        printf("Libro registrado\n");
         fflush(stdin);
         printf("Quiere introducir mas libros? (s/n)=> ");
     }while(getchar()=='s' || getchar() == 'S');
@@ -171,6 +168,7 @@ void altas(void)
     }
     fwrite(&registro0, sizeof(registro0), 1, p1);
     fclose(p1);
+    ordenar();
 }
 
 
@@ -595,6 +593,7 @@ void modificaciones(void)
 
     }while(1);
     fclose(p1);
+    ordenar();
 
 }
 
@@ -646,6 +645,7 @@ void bajas(void)
                 getch();
 
                 printf("Quieres eliminar el libro? (s/n) => ");
+                fflush(stdin);
                 scanf("%c", &respuesta);
                 if(respuesta=='s' || respuesta =='S')
                 {
@@ -660,7 +660,7 @@ void bajas(void)
                         fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
                     }
                     fseek(p1, 0L, 0);
-                    registro0.nRegistros = n-1;
+                    n = n-1;
                     for(k=0;k<84;k++)
                     {
                         registro0.blancos[k]=' ';
@@ -680,4 +680,58 @@ void bajas(void)
     }while(1);
 
     fclose(p1);
+    ordenar();
+}
+
+void ordenar(void)
+{
+    long int n=0;
+    long int desplazamiento;
+    long int i, d;
+    int sw;
+
+    biblioteca registro1, registro2;
+    primer_registro registro0;
+    FILE *p1;
+
+    p1 =fopen("BIBLIOTECA.JC", "r+b");
+    fseek(p1, 0L, 0);
+    fread(&registro0, sizeof(registro0), 1, p1);
+    n= registro0.nRegistros;
+
+    d= n;
+
+    while(d>=1)
+    {
+        d = d/2;
+        do{
+            sw =0;
+        for(i=1;i<=n-d;i++)
+        {
+            desplazamiento = i * sizeof(registro1);
+            fseek(p1, desplazamiento, 0);
+            fread(&registro1, sizeof(registro1), 1, p1);
+
+            desplazamiento= (i+d)*sizeof(registro2);
+            fseek(p1, desplazamiento, 0);
+            fread(&registro2, sizeof(registro2), 1, p1);
+
+            if(strcmp(registro1.autor, registro2.autor)>0)
+            {
+                desplazamiento=i*sizeof(registro2);
+                fseek(p1, desplazamiento, 0);
+                fwrite(&registro2, sizeof(registro2), 1, p1);
+
+                desplazamiento=(i+d)*sizeof(registro1);
+                fseek(p1, desplazamiento, 0);
+                fwrite(&registro1, sizeof(registro1), 1, p1);
+
+                sw =1;
+            }
+        }
+
+        }while(sw);
+    }
+    fclose(p1);
+
 }
