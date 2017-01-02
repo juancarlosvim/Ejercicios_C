@@ -647,10 +647,19 @@ void bajas(void)
                 printf("Quieres eliminar el libro? (s/n) => ");
                 fflush(stdin);
                 scanf("%c", &respuesta);
+                if(respuesta =='n' || respuesta == 'N')
+                {
+                    break;
+                }
                 if(respuesta=='s' || respuesta =='S')
                 {
-                    for(j=i;j<=n;j++)
-                    {
+                    biblioteca1.autor[0]='#';
+                    biblioteca1.titulo[0]='#';
+                    biblioteca1.editorial[0]='#';
+                    biblioteca1.anEdicion =0;
+                    biblioteca1.nPaginas =0;
+                    biblioteca1.precio=0;
+
                         desplazamiento=(j+1)*sizeof(biblioteca1);
                         fseek(p1, desplazamiento, 0);
                         fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
@@ -658,7 +667,7 @@ void bajas(void)
                         desplazamiento =j *sizeof(biblioteca1);
                         fseek(p1, desplazamiento, 0);
                         fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
-                    }
+
                     n = n -1;
                     fseek(p1, 0L, 0);
                     registro0.nRegistros = n;
