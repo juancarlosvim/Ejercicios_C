@@ -649,7 +649,7 @@ void bajas(void)
                 scanf("%c", &respuesta);
                 if(respuesta =='n' || respuesta == 'N')
                 {
-                    break;
+                    continue;
                 }
                 if(respuesta=='s' || respuesta =='S')
                 {
@@ -660,9 +660,11 @@ void bajas(void)
                     biblioteca1.nPaginas =0;
                     biblioteca1.precio=0;
 
+                    desplazamiento=(i+1)*sizeof(biblioteca1);
                     fseek(p1, desplazamiento, 0);
                     fread(&biblioteca1, sizeof(biblioteca1), 1, p1);
 
+                    desplazamiento =i *sizeof(biblioteca1);
                     fseek(p1, desplazamiento, 0);
                     fwrite(&biblioteca1, sizeof(biblioteca1), 1, p1);
 
