@@ -97,6 +97,7 @@ int main()
                 }
             case 5:
                 {
+                    ordenar_nombre();
                     modificaciones();
                     break;
                 }
@@ -494,7 +495,7 @@ void modificaciones(void)
     fread(&registro0, sizeof(registro0), 1, p1);
     n = registro0.nRegistros;
 
-    ordenar_nombre();
+
     do{
         system("cls");
         fflush(stdin);
