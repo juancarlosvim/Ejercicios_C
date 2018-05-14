@@ -1,5 +1,5 @@
 //  |___________________________________________|
-//  | AUTOR : Juan Carlos Villegas Mármol       |
+//  | AUTOR : Juan Carlos Vim                   |
 //  | PROYECTO C                                |
 //  | Mantenimiento de fabrica de textil        |
 //  |___________________________________________|
@@ -257,8 +257,8 @@ int main()
 
 void gestionarticulos(void)
 {
-//printf("Tamaño de la estructura de articulos %d \n", sizeof(articulos));
-    //printf("Tamaño de la estructura de registroArticulos %d \n", sizeof(primer_registro));
+//printf("TamaÃ±o de la estructura de articulos %d \n", sizeof(articulos));
+    //printf("TamaÃ±o de la estructura de registroArticulos %d \n", sizeof(primer_registro));
     int seleccion;
     int k;
     //comprobar_articulos();
@@ -1684,7 +1684,7 @@ void consultas_pedidos(void)
 }
 
 
-//******** FUNCION DE BAJAS PEDIDOS  2º VERSION ********
+//******** FUNCION DE BAJAS PEDIDOS  2Âº VERSION ********
 
 void bajas_pedidos(void)
 {
@@ -3253,7 +3253,7 @@ void bajas_proveedor(void)
 */
 
 
-//AÑADIMOS FUNCION DE MODIFICACIONES PROVEEDORES MEJORADA
+//AÃ‘ADIMOS FUNCION DE MODIFICACIONES PROVEEDORES MEJORADA
 
 
 void modificaciones_proveedor(void)
